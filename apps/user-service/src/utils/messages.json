@@ -1,0 +1,9 @@
+{
+    "keyCloak": {
+        "Fail_TO_GET_LOCATION_HEADER": "Failed to retrieve user location from Keycloak response."
+    },
+    "DUPLICATE_EMAIL": "A user with this email already exists.",
+    "DUPLICATE_USERNAME": "A user with this username already exists.",
+    "ACCESS_DENIED": "Access denied!",
+    "USER_DOES_NOT_HAVE_ROLE": "The desired user does not have this role."
+}

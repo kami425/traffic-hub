@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  PREFER_NOT_TO_SAY
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  // KeyCloak d here for mapping users from database to KeyCloak
+  KC_ID     String   @unique @db.Uuid
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String
+  lastName  String
+  phone     String
+  address   String
+  gender    Gender
+  age       Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userRoles UserRole[]
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  title String @unique
+
+  userRoles UserRole[]
+}
+
+model UserRole {
+  id     Int @id @default(autoincrement())
+  userId Int
+  roleId Int
+
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+}
